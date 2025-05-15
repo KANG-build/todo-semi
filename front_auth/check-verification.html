@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>check-verification</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    body {
+      font-family: 'Noto Sans', sans-serif;
+      background-color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+
+    p {
+      font-size: 14px;
+      margin: 10px 0;
+      text-align: center;
+    }
+
+    button {
+      padding: 10px 30px;
+      background-color: #404040;
+      color: white;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+
+    button:hover {
+      background-color: #333;
+    }
+
+    .small-link {
+      margin-top: 10px;
+      font-size: 12px;
+      color: gray;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <p id="emailDisplay"></p>
+  <p>이메일이 이메일 예시로 전송되었습니다.<br>이메일의 링크를 탭한 후 아래 '인증하기' 버튼을 눌러주세요.</p>
+  <button id="verifyBtn">인증하기</button>
+  <div class="small-link" id="changeEmailLink">이메일 변경</div>
+
+  <script src="js/unified-auth.js"></script>
+  <script>
+    const email = getEmailFromQuery();
+    document.getElementById("emailDisplay").innerText = `📧 ${email}`;
+
+    document.getElementById("verifyBtn").addEventListener("click", async () => {
+      try {
+        const result = await verifyEmailRequest(email);
+
+        if (result.success) {
+          window.location.href = `profile.html?email=${encodeURIComponent(email)}`;
+        } else {
+          alert("이메일 인증이 아직 완료되지 않았습니다.");
+        }
+      } catch (error) {
+        console.error("인증 오류:", error);
+        alert("서버 오류로 인증 확인에 실패했습니다.");
+      }
+    });
+
+    document.getElementById("changeEmailLink").addEventListener("click", () => {
+      goToPage("signup.html");
+    });
+  </script>
+
+</body>
+</html>

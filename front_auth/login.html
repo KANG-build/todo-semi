@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>login</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    body {
+      font-family: 'Noto Sans', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+      background-color: #ffffff;
+    }
+
+    input[type="email"], input[type="password"] {
+      width: 300px;
+      padding: 10px;
+      margin: 10px 0;
+      border: none;
+      background-color: #f5f5f5;
+      border-radius: 6px;
+    }
+
+    label {
+      align-self: flex-start;
+      margin-left: calc(50% - 150px); /* 300px 입력창 기준 */
+      margin-top: 10px;
+      font-size: 14px;
+    }
+
+    button {
+      padding: 10px 30px;
+      background-color: #404040;
+      color: white;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+
+    button:hover {
+      background-color: #333;
+    }
+
+    .forgot {
+      font-size: 12px;
+      color: gray;
+      margin-top: 10px;
+      text-align: center;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <div style="display: flex; flex-direction: column; width: 300px;">
+    <label for="email">이메일</label>
+    <input type="email" id="email" name="email" required>
+
+    <label for="password">비밀번호</label>
+    <input type="password" id="password" name="password" required>
+
+    <button id="loginBtn">확인</button>
+    <div class="forgot">비밀번호를 잊으셨나요?</div>
+  </div>
+
+  <script src="js/unified-auth.js"></script>
+  <script>
+    document.getElementById("loginBtn").addEventListener("click", async () => {
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value;
+
+      if (!email || !password) {
+        alert("이메일과 비밀번호를 모두 입력해주세요.");
+        return;
+      }
+
+      try {
+        const result = await postJSON("/login", { email, password });
+
+        if (result.success) {
+          alert("✅ 로그인 성공");
+          window.location.href = "main.html";
+        } else {
+          alert(result.message || "❌ 로그인 실패: 이메일 또는 비밀번호를 확인하세요.");
+        }
+      } catch (error) {
+        console.error("로그인 오류:", error);
+        alert("서버 오류로 로그인에 실패했습니다.");
+      }
+    });
+  </script>
+
+</body>
+</html>

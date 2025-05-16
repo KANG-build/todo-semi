@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>auth</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    body {
+      font-family: 'Noto Sans', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #ffffff;
+    }
+
+    .logo {
+      font-size: 32px;
+      font-weight: bold;
+      margin-top: 20px;
+      margin-bottom: 30px;
+    }
+
+    .icon {
+      width: 80px;
+      height: 80px;
+      background-color: #ccc;
+      border-radius: 50%;
+      position: relative;
+    }
+
+    .icon::after {
+      content: ";";
+      position: absolute;
+      font-size: 60px;
+      font-weight: bold;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: white;
+    }
+
+    .button {
+      width: 200px;
+      padding: 10px;
+      margin: 10px;
+      border: none;
+      background-color: #d9d9d9;
+      color: #000;
+      font-size: 16px;
+      border-radius: 20px;
+      cursor: pointer;
+    }
+    .button:hover {
+      background-color: #c0c0c0;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="icon"></div>
+  <div class="logo">SEMICOLON;</div>
+
+  <button class="button" id="signupBtn">회원 가입</button>
+  <button class="button" id="loginBtn">로그인</button>
+
+  <script src="js/unified-auth.js"></script>
+  <script>
+    document.getElementById("signupBtn").addEventListener("click", () => {
+      goToPage("signup.html");
+    });
+
+    document.getElementById("loginBtn").addEventListener("click", () => {
+      goToPage("login.html");
+    });
+  </script>
+
+</body>
+</html>
